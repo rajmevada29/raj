@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Details - Rotaract Club of New LJIET</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- Page Banner --- */
+        .page-banner {
+            background: linear-gradient(rgba(21, 32, 43, 0.7), rgba(21, 32, 43, 0.7)), url('https://placehold.co/1920x500/3498db/ffffff?text=Blood+Donation+Drive') no-repeat center center/cover;
+        }
+
+        /* --- Navigation --- */
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f59e0b; /* Amber-500 */
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #f59e0b;
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+        
+        /* --- Countdown Timer --- */
+        .countdown-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* --- Scroll-triggered Animations --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* --- Gallery --- */
+        .gallery-item {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            z-index: 10;
+        }
+
+    </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+    <!-- Header & Navigation -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-gray-900">
+                <span class="text-blue-600">Rotaract</span><span class="text-amber-500">LJIET</span>
+            </a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="index.html" class="nav-link text-gray-600 font-semibold">Home</a>
+                <a href="index.html#about" class="nav-link text-gray-600 font-semibold">About</a>
+                <a href="index.html#events" class="nav-link text-gray-600 font-semibold active">Events</a>
+                <a href="index.html#gallery" class="nav-link text-gray-600 font-semibold">Gallery</a>
+                <a href="team.html" class="nav-link text-gray-600 font-semibold">Team</a>
+                <a href="index.html#contact" class="nav-link text-gray-600 font-semibold">Contact</a>
+            </div>
+            <div class="flex items-center">
+                <button id="login-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full transition duration-300 transform hover:scale-105 shadow-lg hover:shadow-blue-500/50">
+                    Login / Register
+                </button>
+                <button id="mobile-menu-btn" class="md:hidden text-gray-800 ml-4">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4 border-t border-gray-200">
+            <a href="index.html" class="block py-2 nav-link text-gray-600">Home</a>
+            <a href="index.html#about" class="block py-2 nav-link text-gray-600">About</a>
+            <a href="index.html#events" class="block py-2 nav-link text-gray-600 active">Events</a>
+            <a href="index.html#gallery" class="block py-2 nav-link text-gray-600">Gallery</a>
+            <a href="team.html" class="block py-2 nav-link text-gray-600">Team</a>
+            <a href="index.html#contact" class="block py-2 nav-link text-gray-600">Contact</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Page Banner -->
+        <section class="page-banner text-white relative">
+            <div class="container mx-auto px-6 py-24 md:py-32 text-center relative z-10" style="animation: fadeInDown 1s ease-out;">
+                <h1 class="text-4xl md:text-6xl font-bold tracking-tight">Blood Donation Drive</h1>
+                <p class="text-lg md:text-xl mt-4">Give the gift of life. Your donation can save up to three lives.</p>
+            </div>
+            <!-- Countdown Timer -->
+            <div id="countdown" class="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-full max-w-2xl px-4 z-20">
+                <div class="countdown-box rounded-xl shadow-2xl p-4 sm:p-6 grid grid-cols-4 gap-2 sm:gap-4 text-center text-white">
+                    <div><div id="days" class="text-3xl sm:text-5xl font-bold">00</div><span class="text-xs sm:text-sm uppercase">Days</span></div>
+                    <div><div id="hours" class="text-3xl sm:text-5xl font-bold">00</div><span class="text-xs sm:text-sm uppercase">Hours</span></div>
+                    <div><div id="minutes" class="text-3xl sm:text-5xl font-bold">00</div><span class="text-xs sm:text-sm uppercase">Minutes</span></div>
+                    <div><div id="seconds" class="text-3xl sm:text-5xl font-bold">00</div><span class="text-xs sm:text-sm uppercase">Seconds</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Event Details Section -->
+        <section class="pt-32 pb-24 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                    <!-- Left Column: Details & Schedule -->
+                    <div class="lg:col-span-2">
+                        <div class="reveal">
+                            <h2 class="text-3xl font-bold text-gray-900 mb-4">About the Event</h2>
+                            <p class="text-gray-600 leading-relaxed mb-8">
+                                Join the Rotaract Club of New LJIET for our annual Blood Donation Drive, a cornerstone event in our commitment to community health and service. Every year, our community faces a shortage of blood, and your single donation can be a lifeline for someone in critical need. This event is organized in partnership with the local Red Cross chapter to ensure the highest standards of safety and care for all donors. We believe that small acts of kindness can create waves of positive change. Come, be a hero, and help us make a tangible impact on the lives of people in our community.
+                            </p>
+                        </div>
+                        
+                        <div class="reveal">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-6">Event Schedule</h3>
+                            <ul class="space-y-4">
+                                <li class="flex items-start p-4 bg-gray-50 rounded-lg">
+                                    <i class="fas fa-clock text-blue-500 mt-1 mr-4"></i>
+                                    <div>
+                                        <p class="font-semibold">09:00 AM - 10:00 AM</p>
+                                        <p class="text-gray-600">Registration & Pre-Donation Screening</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start p-4 bg-gray-50 rounded-lg">
+                                    <i class="fas fa-tint text-red-500 mt-1 mr-4"></i>
+                                    <div>
+                                        <p class="font-semibold">10:00 AM - 04:00 PM</p>
+                                        <p class="text-gray-600">Blood Donation Slots</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start p-4 bg-gray-50 rounded-lg">
+                                    <i class="fas fa-cookie-bite text-yellow-500 mt-1 mr-4"></i>
+                                    <div>
+                                        <p class="font-semibold">All Day</p>
+                                        <p class="text-gray-600">Refreshments & Rest Area for Donors</p>
+                                    </div>
+                                </li>
+                                <li class="flex items-start p-4 bg-gray-50 rounded-lg">
+                                    <i class="fas fa-certificate text-green-500 mt-1 mr-4"></i>
+                                    <div>
+                                        <p class="font-semibold">04:00 PM - 04:30 PM</p>
+                                        <p class="text-gray-600">Certificate Distribution & Closing Ceremony</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Info Card -->
+                    <div class="reveal">
+                        <div class="bg-white rounded-xl shadow-lg p-8 sticky top-28">
+                            <h3 class="text-2xl font-bold mb-6 text-center">Event Info</h3>
+                            <div class="space-y-5 text-gray-700">
+                                <p class="flex items-center"><i class="fas fa-calendar-alt fa-fw mr-3 text-blue-600"></i><span class="font-semibold">Date:</span>&nbsp; August 15, 2025</p>
+                                <p class="flex items-center"><i class="fas fa-clock fa-fw mr-3 text-blue-600"></i><span class="font-semibold">Time:</span>&nbsp; 9:00 AM - 5:00 PM</p>
+                                <p class="flex items-center"><i class="fas fa-map-marker-alt fa-fw mr-3 text-blue-600"></i><span class="font-semibold">Venue:</span>&nbsp; LJIET Campus Auditorium</p>
+                                <p class="flex items-center"><i class="fas fa-user-friends fa-fw mr-3 text-blue-600"></i><span class="font-semibold">Open To:</span>&nbsp; All Students & Staff</p>
+                            </div>
+                            <button class="w-full mt-8 bg-amber-500 hover:bg-amber-600 text-white font-bold py-3 px-4 rounded-lg transition duration-300 transform hover:scale-105 shadow-lg hover:shadow-amber-500/50">
+                                Register to Donate
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Location & Gallery Section -->
+        <section class="py-24 bg-gray-100">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <!-- Location Map -->
+                    <div class="reveal">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-6">How to Get There</h2>
+                        <div class="aspect-w-16 aspect-h-9 rounded-lg overflow-hidden shadow-lg">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3671.943321969468!2d72.50939931542098!3d23.0259830849516!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x395e9b394745f621%3A0x524634a58285513!2sL.J.%20Institute%20of%20Engineering%20and%20Technology!5e0!3m2!1sen!2sin!4v1658842289656!5m2!1sen!2sin" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                        </div>
+                    </div>
+                    <!-- Photo Gallery -->
+                    <div class="reveal">
+                        <h2 class="text-3xl font-bold text-gray-900 mb-6">From Our Past Drives</h2>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                            <div class="gallery-item"><img class="h-auto max-w-full rounded-lg" src="https://placehold.co/300x200/3498db/ffffff?text=Donation+1" alt=""></div>
+                            <div class="gallery-item"><img class="h-auto max-w-full rounded-lg" src="https://placehold.co/300x200/3498db/ffffff?text=Donation+2" alt=""></div>
+                            <div class="gallery-item"><img class="h-auto max-w-full rounded-lg" src="https://placehold.co/300x200/3498db/ffffff?text=Team+Photo" alt=""></div>
+                            <div class="gallery-item"><img class="h-auto max-w-full rounded-lg" src="https://placehold.co/300x200/3498db/ffffff?text=Volunteer" alt=""></div>
+                            <div class="gallery-item"><img class="h-auto max-w-full rounded-lg" src="https://placehold.co/300x200/3498db/ffffff?text=Refreshments" alt=""></div>
+                            <div class="gallery-item"><img class="h-auto max-w-full rounded-lg" src="https://placehold.co/300x200/3498db/ffffff?text=Happy+Donor" alt=""></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-10">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 Rotaract Club of New LJIET. All Rights Reserved.</p>
+            <p>Designed with <i class="fas fa-heart text-red-500"></i> for Community Service</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Countdown Timer ---
+            const countdownElement = document.getElementById('countdown');
+            // Set the date for the event (August 15, 2025)
+            const eventDate = new Date("Aug 15, 2025 09:00:00").getTime();
+
+            const updateCountdown = () => {
+                const now = new Date().getTime();
+                const distance = eventDate - now;
+
+                if (distance < 0) {
+                    countdownElement.innerHTML = `<div class="text-center text-white text-2xl font-bold py-6">This event has passed. Thank you for your support!</div>`;
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('days').innerText = days.toString().padStart(2, '0');
+                document.getElementById('hours').innerText = hours.toString().padStart(2, '0');
+                document.getElementById('minutes').innerText = minutes.toString().padStart(2, '0');
+                document.getElementById('seconds').innerText = seconds.toString().padStart(2, '0');
+            };
+
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+
+            // --- Scroll Reveal Animation ---
+            const revealElements = document.querySelectorAll('.reveal');
+            const revealOnScroll = () => {
+                const windowHeight = window.innerHeight;
+                revealElements.forEach(el => {
+                    const elementTop = el.getBoundingClientRect().top;
+                    if (elementTop < windowHeight - 100) {
+                        el.classList.add('active');
+                    }
+                });
+            };
+            window.addEventListener('scroll', revealOnScroll);
+            revealOnScroll();
+
+            // --- Mobile Menu Toggle ---
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        });
+    </script>
+</body>
+</html>

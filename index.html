@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotaract Club of New LJIET</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        @keyframes kenburns {
+            0% { transform: scale(1.15) translate(5%, -5%); }
+            100% { transform: scale(1) translate(0, 0); }
+        }
+        @keyframes growWidth {
+            from { width: 0; transform: translateX(50%); }
+            to { width: 100%; transform: translateX(0); }
+        }
+
+        /* --- Enhanced Hero Section --- */
+        .hero-section {
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(21, 32, 43, 0.6), rgba(21, 32, 43, 0.6)), url('img/banner.jpeg') no-repeat center center/cover;
+            animation: kenburns 40s ease-in-out infinite alternate;
+            z-index: 0;
+        }
+        
+        .hero-section .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-section h1 { animation: fadeInDown 1s ease-out forwards; }
+        .hero-section p { animation: fadeInUp 1s ease-out 0.5s forwards; opacity: 0; }
+        .hero-section .cta-button { animation: pulse 2s infinite 1.5s; }
+
+        /* --- Scroll-triggered Animations --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Enhanced Card Hover Effects --- */
+        .card-hover {
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        .gallery-image-hover {
+            transition: transform 0.4s ease, filter 0.4s ease;
+        }
+        .gallery-image-hover:hover {
+            transform: scale(1.05);
+            filter: brightness(1.1);
+        }
+
+        /* --- Navigation --- */
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f59e0b; /* Amber-500 */
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #f59e0b;
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* --- Modal Animations --- */
+        .modal {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        .modal-content {
+            transform: scale(0.95);
+            opacity: 0;
+            transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        }
+        .modal.active .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        /* --- Form & Tab Styling --- */
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.5s ease; }
+        .form-container.hidden { display: none; }
+        .tab-btn {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .tab-btn.active-tab { color: #2563eb; }
+        .tab-btn.active-tab::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background-color: #2563eb;
+            border-radius: 2px;
+            animation: growWidth 0.4s ease;
+        }
+        
+        .social-icon { transition: transform 0.3s ease, color 0.3s ease; }
+        .social-icon:hover { transform: translateY(-4px); }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Header & Navigation -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <!-- Logo and Club Name -->
+            <a href="#" class="flex items-center space-x-3">
+                <img src="img/logo.png " style="width: 75px; height: 75px;" alt="Rotaract Logo" class="h-10 w-10 rounded-full">
+                <span class="text-2xl font-bold text-gray-900">
+                    <span class="text-blue-600">Rotaract</span><span class="text-amber-500">LJIET</span>
+                </span>
+            </a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#home" class="nav-link text-gray-600 font-semibold active">Home</a>
+                <a href="#about" class="nav-link text-gray-600 font-semibold">About</a>
+                <a href="event.html" class="nav-link text-gray-600 font-semibold">Events</a>
+                <a href="#gallery" class="nav-link text-gray-600 font-semibold">Gallery</a>
+                <a href="team.html" class="nav-link text-gray-600 font-semibold">Team</a>
+                <a href="#contact" class="nav-link text-gray-600 font-semibold">Contact</a>
+            </div>
+            <div class="flex items-center">
+                <button id="login-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full transition duration-300 transform hover:scale-105 shadow-lg hover:shadow-blue-500/50">
+                    Login / Register
+                </button>
+                <button id="mobile-menu-btn" class="md:hidden text-gray-800 ml-4">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4 border-t border-gray-200">
+            <a href="#home" class="block py-2 nav-link text-gray-600">Home</a>
+            <a href="#about" class="block py-2 nav-link text-gray-600">About</a>
+            <a href="event.html" class="block py-2 nav-link text-gray-600">Events</a>
+            <a href="#gallery" class="block py-2 nav-link text-gray-600">Gallery</a>
+            <a href="team.html" class="block py-2 nav-link text-gray-600">Team</a>
+            <a href="#contact" class="block py-2 nav-link text-gray-600">Contact</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero-section text-white h-[calc(100vh-68px)] flex items-center justify-center text-center">
+            <div class="container mx-auto px-6 content">
+                <h1 class="text-5xl md:text-7xl font-bold mb-4 tracking-tight">Service Above Self</h1>
+                <p class="text-lg md:text-2xl mb-8 max-w-3xl mx-auto">Welcome to the Rotaract Club of New LJIET. Join us in making a difference.</p>
+                <a href="#events" class="cta-button bg-amber-500 hover:bg-amber-600 text-white font-bold py-4 px-10 rounded-full text-lg transition duration-300 transform hover:scale-110 shadow-xl hover:shadow-amber-500/50">
+                    Explore Our Events
+                </a>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section id="about" class="py-24 bg-white reveal">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-4xl font-bold mb-4 text-gray-900">About Our Club</h2>
+                <div class="w-24 h-1.5 bg-blue-600 mx-auto mb-8 rounded-full"></div>
+                <p class="max-w-3xl mx-auto text-gray-600 text-lg leading-relaxed">
+                    The Rotaract Club of New LJIET is a community of young leaders dedicated to service and professional development. Our mission is to provide an opportunity for young men and women to enhance the knowledge and skills that will assist them in personal development, to address the physical and social needs of their communities, and to promote better relations between all people worldwide through a framework of friendship and service.
+                </p>
+            </div>
+        </section>
+
+        <!-- Events Section -->
+        <section id="events" class="py-24 bg-gray-50 reveal">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl font-bold mb-16 text-center text-gray-900">Upcoming & Past Events</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <!-- Event Card 1 -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover flex flex-col">
+                        <img src="img/3.jpeg" alt="Event 1" class="w-full h-56 object-cover">
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="font-bold text-xl mb-2">Blood Donation Drive</h3>
+                            <p class="text-gray-600 mb-4 flex-grow">Join us for our annual blood donation drive and save lives. Your contribution can make a huge difference.</p>
+                            <div class="mt-auto">
+                                <span class="text-sm font-semibold text-gray-500 block mb-4">Date: August 15, 2025</span>
+                                <a href="event-detail.html" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Event Card 2 -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover flex flex-col">
+                        <img src="img/tree.png" alt="Event 2" class="w-full h-56 object-cover">
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="font-bold text-xl mb-2">Tree Plantation</h3>
+                            <p class="text-gray-600 mb-4 flex-grow">Let's make our planet greener. We are planting 1000 saplings in the local community.</p>
+                             <div class="mt-auto">
+                                <span class="text-sm font-semibold text-gray-500 block mb-4">Date: September 5, 2025</span>
+                                <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Event Card 3 -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover flex flex-col">
+                        <img src="img/book.png" alt="Event 3" class="w-full h-56 object-cover">
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="font-bold text-xl mb-2">Charity Marathon</h3>
+                            <p class="text-gray-600 mb-4 flex-grow">Run for a cause! All proceeds will go to support education for underprivileged children.</p>
+                             <div class="mt-auto">
+                                <span class="text-sm font-semibold text-gray-500 block mb-4">Date: October 20, 2025</span>
+                                <a href="#" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-300">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="gallery" class="py-24 bg-white reveal">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl font-bold mb-16 text-center text-gray-900">Our Gallery</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="grid gap-4">
+                        <div><img class="h-auto max-w-full rounded-lg gallery-image-hover" src="img/laterhead.jpeg" alt=""></div>
+                        <div><img class="h-auto max-w-full rounded-lg gallery-image-hover" src="img/Screenshot 2025-07-26 200506.png" alt=""></div>
+                    </div>
+                    <div class="grid gap-4">
+                        <div><img class="h-auto max-w-full rounded-lg gallery-image-hover" src="img/groupteam.jpeg" alt=""></div>
+                        <div><img class="h-auto max-w-full rounded-lg gallery-image-hover" src="img/3.jpeg" alt=""></div>
+                    </div>
+                    <div class="grid gap-4">
+                        <div><img class="h-auto max-w-full rounded-lg gallery-image-hover" src="img/Screenshot 2025-07-26 200644.png" alt=""></div>
+                        <div><img class="h-auto max-w-full rounded-lg gallery-image-hover" src="img/book.png" alt=""></div>
+                    </div>
+                     <div class="grid gap-4">
+                        <div><img class="h-auto max-w-full rounded-lg gallery-image-hover" src="img/WhatsApp Image 2025-07-26 at 9.30.07 PM.jpeg" alt=""></div>
+                        <div><img class="h-auto max-w-full rounded-lg gallery-image-hover" src="img/group.jpeg" alt=""></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Team Section -->
+        <section id="team" class="py-24 bg-gray-50 reveal">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-4xl font-bold mb-16 text-center text-gray-900">Our Dedicated Team</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="text-center bg-white p-6 rounded-xl shadow-lg card-hover">
+                        <img class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-blue-200" src="img/dwnit2.png" alt="Team Member">
+                        <h3 class="text-xl font-bold">Rtr. Dhawnit Mistri</h3>
+                        <p class="text-gray-500">President</p>
+                    </div>
+                    <div class="text-center bg-white p-6 rounded-xl shadow-lg card-hover">
+                        <img class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-red-200" src="img/heer.png" alt="Team Member">
+                        <h3 class="text-xl font-bold">Rtr. Heer Psrekh</h3>
+                        <p class="text-gray-500">Vice President</p>
+                    </div>
+                    <div class="text-center bg-white p-6 rounded-xl shadow-lg card-hover">
+                        <img class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-green-200" src="img/ridhem.png" alt="Team Member">
+                        <h3 class="text-xl font-bold">Rtr. Ridham Kothari</h3>
+                        <p class="text-gray-500">Secretary</p>
+                    </div>
+                    <div class="text-center bg-white p-6 rounded-xl shadow-lg card-hover">
+                        <img class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-yellow-200" src="img/trisha.png" alt="Team Member">
+                        <h3 class="text-xl font-bold">Rtr. Trisha Dave</h3>
+                        <p class="text-gray-500">Treasurer</p>
+                    </div>
+                </div>
+                <div class="mt-16">
+                    <a href="team.html" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300 transform hover:scale-105 shadow-lg hover:shadow-blue-500/50">
+                        Meet the Full Team
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 bg-white reveal">
+            <div class="container mx-auto px-6">
+                <h2 class="text-4xl font-bold mb-16 text-center text-gray-900">Get In Touch</h2>
+                <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 bg-gray-50 p-8 sm:p-12 rounded-2xl shadow-lg">
+                    <form>
+                        <h3 class="text-2xl font-bold mb-6 text-gray-800">Send us a Message</h3>
+                        <div class="mb-5">
+                            <label for="name" class="block text-gray-700 font-bold mb-2">Name</label>
+                            <input type="text" id="name" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" placeholder="Your Name">
+                        </div>
+                        <div class="mb-5">
+                            <label for="email" class="block text-gray-700 font-bold mb-2">Email</label>
+                            <input type="email" id="email" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" placeholder="Your Email">
+                        </div>
+                        <div class="mb-5">
+                            <label for="message" class="block text-gray-700 font-bold mb-2">Message</label>
+                            <textarea id="message" rows="4" class="w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition" placeholder="Your Message"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300 transform hover:scale-105 shadow-lg hover:shadow-blue-500/50">Send Message</button>
+                    </form>
+                    <div class="text-gray-700">
+                        <h3 class="text-2xl font-bold mb-6">Contact Information</h3>
+                        <p class="mb-6 leading-relaxed">Feel free to reach out to us through any of the following methods:</p>
+                        <p class="mb-4 flex items-center"><i class="fas fa-map-marker-alt mr-4 text-blue-600 text-xl"></i> New LJIET Campus, Ahmedabad, India</p>
+                        <p class="mb-4 flex items-center"><i class="fas fa-phone mr-4 text-blue-600 text-xl"></i> +91 12345 67890</p>
+                        <p class="mb-4 flex items-center"><i class="fas fa-envelope mr-4 text-blue-600 text-xl"></i> contact@rotaractljiet.org</p>
+                        <div class="mt-10">
+                             <h4 class="font-bold mb-4 text-lg">Follow Us</h4>
+                             <div class="flex space-x-6">
+                                 <a href="#" class="text-blue-600 hover:text-blue-800 text-3xl social-icon"><i class="fab fa-facebook-f"></i></a>
+                                 <a href="#" class="text-blue-400 hover:text-blue-600 text-3xl social-icon"><i class="fab fa-twitter"></i></a>
+                                 <a href="#" class="text-pink-600 hover:text-pink-800 text-3xl social-icon"><i class="fab fa-instagram"></i></a>
+                                 <a href="#" class="text-blue-700 hover:text-blue-900 text-3xl social-icon"><i class="fab fa-linkedin-in"></i></a>
+                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-10">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 Rotaract Club of New LJIET. All Rights Reserved.</p>
+            <p>Designed with <i class="fas fa-heart text-red-500"></i> for Community Service</p>
+        </div>
+    </footer>
+
+    <!-- Login/Registration Modal -->
+    <div id="login-modal" class="modal fixed inset-0 bg-black bg-opacity-60 items-center justify-center p-4 z-50">
+        <div class="modal-content bg-white rounded-lg shadow-2xl w-full max-w-md relative overflow-hidden">
+            <button id="close-modal-btn" class="absolute top-3 right-4 text-gray-500 hover:text-gray-900 text-3xl font-light">&times;</button>
+            <div class="p-8">
+                <div class="flex border-b mb-6">
+                    <button data-tab="member" class="tab-btn flex-1 py-3 font-semibold text-gray-500 focus:outline-none">Member</button>
+                    <button data-tab="bod" class="tab-btn flex-1 py-3 font-semibold text-gray-500 focus:outline-none">BOD/Core</button>
+                    <button data-tab="admin" class="tab-btn flex-1 py-3 font-semibold text-gray-500 focus:outline-none">Admin</button>
+                </div>
+
+                <!-- Member Tab Content -->
+                <div id="member-tab" class="tab-content">
+                    <div class="login-form form-container">
+                        <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">Member Login</h2>
+                        <form>
+                            <div class="mb-4"><label for="member-email" class="block text-gray-700 mb-2">Email</label><input type="email" id="member-email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="your.email@example.com"></div>
+                            <div class="mb-6"><label for="member-password" class="block text-gray-700 mb-2">Password</label><input type="password" id="member-password" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="********"></div>
+                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">Login</button>
+                        </form>
+                        <p class="text-center mt-4 text-sm">Don't have an account? <a href="#" class="font-semibold text-blue-600 hover:underline switch-to-register">Register</a></p>
+                    </div>
+                    <div class="register-form form-container hidden">
+                        <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">Member Registration</h2>
+                        <form>
+                            <div class="mb-4"><label for="member-reg-name" class="block text-gray-700 mb-2">Full Name</label><input type="text" id="member-reg-name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="John Doe"></div>
+                            <div class="mb-4"><label for="member-reg-email" class="block text-gray-700 mb-2">Email</label><input type="email" id="member-reg-email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="your.email@example.com"></div>
+                            <div class="mb-4"><label for="member-reg-password" class="block text-gray-700 mb-2">Password</label><input type="password" id="member-reg-password" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="********"></div>
+                            <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">Register</button>
+                        </form>
+                        <p class="text-center mt-4 text-sm">Already have an account? <a href="#" class="font-semibold text-blue-600 hover:underline switch-to-login">Login</a></p>
+                    </div>
+                </div>
+
+                <!-- BOD/Core Team Tab Content -->
+                <div id="bod-tab" class="tab-content">
+                     <div class="login-form form-container">
+                        <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">BOD/Core Team Login</h2>
+                        <form>
+                            <div class="mb-4"><label for="bod-email" class="block text-gray-700 mb-2">Email</label><input type="email" id="bod-email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="your.email@example.com"></div>
+                            <div class="mb-6"><label for="bod-password" class="block text-gray-700 mb-2">Password</label><input type="password" id="bod-password" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="********"></div>
+                            <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300">Login</button>
+                        </form>
+                        <p class="text-center mt-4 text-sm">Need an account? <a href="#" class="font-semibold text-amber-600 hover:underline switch-to-register">Register</a></p>
+                    </div>
+                    <div class="register-form form-container hidden">
+                        <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">BOD/Core Registration</h2>
+                        <form>
+                            <div class="mb-4"><label for="bod-reg-name" class="block text-gray-700 mb-2">Full Name</label><input type="text" id="bod-reg-name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="Jane Doe"></div>
+                            <div class="mb-4"><label for="bod-reg-email" class="block text-gray-700 mb-2">Email</label><input type="email" id="bod-reg-email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="your.email@example.com"></div>
+                            <div class="mb-4"><label for="bod-reg-password" class="block text-gray-700 mb-2">Password</label><input type="password" id="bod-reg-password" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="********"></div>
+                            <button type="submit" class="w-full bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded-lg transition duration-300">Register</button>
+                        </form>
+                        <p class="text-center mt-4 text-sm">Already have an account? <a href="#" class="font-semibold text-amber-600 hover:underline switch-to-login">Login</a></p>
+                    </div>
+                </div>
+
+                <!-- Admin Tab Content -->
+                <div id="admin-tab" class="tab-content">
+                    <div class="login-form form-container">
+                        <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">Admin Login</h2>
+                        <form>
+                            <div class="mb-4"><label for="admin-username" class="block text-gray-700 mb-2">Username</label><input type="text" id="admin-username" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="admin_username"></div>
+                            <div class="mb-6"><label for="admin-password" class="block text-gray-700 mb-2">Password</label><input type="password" id="admin-password" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="********"></div>
+                            <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">Login</button>
+                        </form>
+                         <p class="text-center mt-4 text-sm">Need an account? <a href="#" class="font-semibold text-red-600 hover:underline switch-to-register">Register</a></p>
+                    </div>
+                    <div class="register-form form-container hidden">
+                        <h2 class="text-2xl font-bold mb-6 text-center text-gray-800">Admin Registration</h2>
+                        <form>
+                            <div class="mb-4"><label for="admin-reg-name" class="block text-gray-700 mb-2">Username</label><input type="text" id="admin-reg-name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="admin_username"></div>
+                            <div class="mb-4"><label for="admin-reg-email" class="block text-gray-700 mb-2">Email</label><input type="email" id="admin-reg-email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="your.email@example.com"></div>
+                            <div class="mb-4"><label for="admin-reg-password" class="block text-gray-700 mb-2">Password</label><input type="password" id="admin-reg-password" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" placeholder="********"></div>
+                            <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg transition duration-300">Register</button>
+                        </form>
+                        <p class="text-center mt-4 text-sm">Already have an account? <a href="#" class="font-semibold text-red-600 hover:underline switch-to-login">Login</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Scroll Reveal Animation ---
+            const revealElements = document.querySelectorAll('.reveal');
+            const revealOnScroll = () => {
+                const windowHeight = window.innerHeight;
+                revealElements.forEach(el => {
+                    const elementTop = el.getBoundingClientRect().top;
+                    const elementVisible = 150; // Distance from bottom of viewport to trigger
+                    if (elementTop < windowHeight - elementVisible) {
+                        el.classList.add('active');
+                    }
+                });
+            };
+            window.addEventListener('scroll', revealOnScroll);
+            revealOnScroll(); // Initial check
+
+            // --- Modal and Menu Logic ---
+            const loginBtn = document.getElementById('login-btn');
+            const modal = document.getElementById('login-modal');
+            const closeModalBtn = document.getElementById('close-modal-btn');
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            loginBtn.addEventListener('click', () => {
+                modal.classList.add('active');
+                switchTab('member');
+            });
+
+            closeModalBtn.addEventListener('click', () => {
+                modal.classList.remove('active');
+            });
+
+            window.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+
+            modal.addEventListener('click', (e) => {
+                const tabContent = e.target.closest('.tab-content');
+                if (!tabContent) return;
+
+                if (e.target.classList.contains('switch-to-register')) {
+                    e.preventDefault();
+                    tabContent.querySelector('.login-form').classList.add('hidden');
+                    tabContent.querySelector('.register-form').classList.remove('hidden');
+                }
+
+                if (e.target.classList.contains('switch-to-login')) {
+                    e.preventDefault();
+                    tabContent.querySelector('.register-form').classList.add('hidden');
+                    tabContent.querySelector('.login-form').classList.remove('hidden');
+                }
+            });
+
+            function switchTab(tabId) {
+                tabBtns.forEach(btn => {
+                    btn.classList.toggle('active-tab', btn.dataset.tab === tabId);
+                });
+
+                tabContents.forEach(content => {
+                    if (content.id === `${tabId}-tab`) {
+                        content.classList.add('active');
+                        content.querySelector('.login-form').classList.remove('hidden');
+                        content.querySelector('.register-form').classList.add('hidden');
+                    } else {
+                        content.classList.remove('active');
+                    }
+                });
+            }
+
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    switchTab(btn.dataset.tab);
+                });
+            });
+
+            // Active Nav Link on Scroll
+            const sections = document.querySelectorAll('section[id]');
+            window.addEventListener('scroll', navHighlighter);
+
+            function navHighlighter() {
+              let scrollY = window.pageYOffset;
+              
+              sections.forEach(current => {
+                const sectionHeight = current.offsetHeight;
+                const sectionTop = current.offsetTop - 100;
+                let sectionId = current.getAttribute('id');
+                
+                if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight){
+                  document.querySelector('.nav-link[href*=' + sectionId + ']').classList.add('active');
+                } else {
+                  document.querySelector('.nav-link[href*=' + sectionId + ']').classList.remove('active');
+                }
+              });
+            }
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetElement = document.querySelector(this.getAttribute('href'));
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+// --- Utility function to handle form submission ---
+async function postData(url = "", data = {}) {
+    const response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+    });
+    return response.json();
+}
+
+// --- MEMBER REGISTRATION ---
+document.querySelector("#member-tab .register-form form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = document.getElementById("member-reg-name").value;
+    const email = document.getElementById("member-reg-email").value;
+    const password = document.getElementById("member-reg-password").value;
+
+    const result = await postData("/api/register", { name, email, password, role: "member" });
+
+    alert(result.message);
+});
+
+// --- MEMBER LOGIN ---
+document.querySelector("#member-tab .login-form form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const email = document.getElementById("member-email").value;
+    const password = document.getElementById("member-password").value;
+
+    const result = await postData("/api/login", { email, password });
+
+    if (result.status === "success") {
+        alert("Welcome " + result.user.name + "!");
+        window.location.reload();
+    } else {
+        alert(result.message);
+    }
+});
+</script>
+
+</body>
+</html>

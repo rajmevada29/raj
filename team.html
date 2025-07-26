@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Team - Rotaract Club of New LJIET</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* --- Page Banner --- */
+        .page-banner {
+            background: linear-gradient(rgba(21, 32, 43, 0.8), rgba(21, 32, 43, 0.8)), url('img/groupteam.jpeg') no-repeat center center/cover;
+        }
+
+        /* --- Navigation --- */
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #f59e0b; /* Amber-500 */
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #f59e0b;
+        }
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* --- Team Card --- */
+        .team-card {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+            transition-delay: var(--delay);
+        }
+        .team-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .team-card-inner {
+             transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        .team-card-inner:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .social-icon {
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        .social-icon:hover {
+            transform: scale(1.2);
+        }
+
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- Header & Navigation -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-gray-900">
+                <span class="text-blue-600">Rotaract</span><span class="text-amber-500">LJIET</span>
+            </a>
+            <div class="hidden md:flex items-center space-x-8">
+                <!-- NOTE: The href for index.html will need to be updated to the correct filename -->
+                <a href="index.html" class="nav-link text-gray-600 font-semibold">Home</a>
+                <a href="index.html#about" class="nav-link text-gray-600 font-semibold">About</a>
+                <a href="index.html#events" class="nav-link text-gray-600 font-semibold">Events</a>
+                <a href="index.html#gallery" class="nav-link text-gray-600 font-semibold">Gallery</a>
+                <a href="team.html" class="nav-link text-gray-600 font-semibold active">Team</a>
+                <a href="index.html#contact" class="nav-link text-gray-600 font-semibold">Contact</a>
+            </div>
+            <div class="flex items-center">
+                <!-- The login button functionality would require JS from the main page or a shared JS file -->
+                <button id="login-btn" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-5 rounded-full transition duration-300 transform hover:scale-105 shadow-lg hover:shadow-blue-500/50">
+                    Login / Register
+                </button>
+                <button id="mobile-menu-btn" class="md:hidden text-gray-800 ml-4">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white px-6 pb-4 border-t border-gray-200">
+            <a href="index.html" class="block py-2 nav-link text-gray-600">Home</a>
+            <a href="index.html#about" class="block py-2 nav-link text-gray-600">About</a>
+            <a href="index.html#events" class="block py-2 nav-link text-gray-600">Events</a>
+            <a href="index.html#gallery" class="block py-2 nav-link text-gray-600">Gallery</a>
+            <a href="team.html" class="block py-2 nav-link text-gray-600 active">Team</a>
+            <a href="index.html#contact" class="block py-2 nav-link text-gray-600">Contact</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Page Banner -->
+        <section class="page-banner text-white py-20 md:py-32">
+            <div class="container mx-auto px-6 text-center" style="animation: fadeInDown 1s ease-out;">
+                <h1 class="text-4xl md:text-6xl font-bold tracking-tight">Our Dedicated Team</h1>
+                <p class="text-lg md:text-xl mt-4">The leaders driving our mission of "Service Above Self".</p>
+            </div>
+        </section>
+
+        <!-- Team Members Section -->
+        <section class="py-24">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+
+                    <!-- Team Member Card: Jane Doe -->
+                    <div class="team-card" style="--delay: 0.1s;">
+                        <div class="team-card-inner bg-white rounded-xl shadow-lg overflow-hidden md:flex">
+                            <img class="w-full md:w-52 h-64 md:h-auto object-cover" src="img/dwnit.png" alt="Jane Doe">
+                            <div class="p-8 flex flex-col justify-between">
+                                <div>
+                                    <div class="uppercase tracking-wide text-sm text-blue-600 font-bold">President</div>
+                                    <h3 class="text-3xl font-bold mt-1 text-gray-900">Rtr. Dhawnit Mistri</h3>
+                                    <p class="mt-4 text-gray-600">A passionate leader dedicated to community service. Jane believes in the power of collective action to create lasting change.</p>
+                                    <p class="mt-3 text-gray-500 italic">"The best way to find yourself is to lose yourself in the service of others."</p>
+                                </div>
+                                <div class="mt-6 flex space-x-4">
+                                    <a href="#" class="text-gray-400 hover:text-blue-700 social-icon"><i class="fab fa-linkedin-in text-2xl"></i></a>
+                                    <a href="#" class="text-gray-400 hover:text-blue-400 social-icon"><i class="fab fa-twitter text-2xl"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team Member Card: John Smith -->
+                    <div class="team-card" style="--delay: 0.2s;">
+                        <div class="team-card-inner bg-white rounded-xl shadow-lg overflow-hidden md:flex">
+                            <img class="w-full md:w-52 h-64 md:h-auto object-cover" src="img/heer2.png" alt="John Smith">
+                            <div class="p-8 flex flex-col justify-between">
+                                <div>
+                                    <div class="uppercase tracking-wide text-sm text-red-600 font-bold">Vice President</div>
+                                    <h3 class="text-3xl font-bold mt-1 text-gray-900">Rtr. Heer Parekh</h3>
+                                    <p class="mt-4 text-gray-600">With a knack for organization, John is the driving force behind our successful events and applies his problem-solving skills to community challenges.</p>
+                                    <p class="mt-3 text-gray-500 italic">"Alone we can do so little; together we can do so much."</p>
+                                </div>
+                                <div class="mt-6 flex space-x-4">
+                                    <a href="#" class="text-gray-400 hover:text-blue-700 social-icon"><i class="fab fa-linkedin-in text-2xl"></i></a>
+                                    <a href="#" class="text-gray-400 hover:text-pink-600 social-icon"><i class="fab fa-instagram text-2xl"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team Member Card: Emily White -->
+                    <div class="team-card" style="--delay: 0.3s;">
+                        <div class="team-card-inner bg-white rounded-xl shadow-lg overflow-hidden md:flex">
+                            <img class="w-full md:w-52 h-64 md:h-auto object-cover" src="img/ridhem2.png" alt="Emily White">
+                            <div class="p-8 flex flex-col justify-between">
+                                <div>
+                                    <div class="uppercase tracking-wide text-sm text-green-600 font-bold">Secretary</div>
+                                    <h3 class="text-3xl font-bold mt-1 text-gray-900">Rtr. Ridhem Kothari</h3>
+                                    <p class="mt-4 text-gray-600">Emily is the backbone of our club's communication. Her attention to detail ensures everything runs smoothly behind the scenes.</p>
+                                    <p class="mt-3 text-gray-500 italic">"Details create the big picture."</p>
+                                </div>
+                                <div class="mt-6 flex space-x-4">
+                                    <a href="#" class="text-gray-400 hover:text-blue-400 social-icon"><i class="fab fa-twitter text-2xl"></i></a>
+                                    <a href="#" class="text-gray-400 hover:text-blue-800 social-icon"><i class="fab fa-facebook-f text-2xl"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Team Member Card: Michael Brown -->
+                    <div class="team-card" style="--delay: 0.4s;">
+                        <div class="team-card-inner bg-white rounded-xl shadow-lg overflow-hidden md:flex">
+                            <img class="w-full md:w-52 h-64 md:h-auto object-cover" src="img/trisha2.png" alt="Michael Brown">
+                            <div class="p-8 flex flex-col justify-between">
+                                <div>
+                                    <div class="uppercase tracking-wide text-sm text-yellow-600 font-bold">Treasurer</div>
+                                    <h3 class="text-3xl font-bold mt-1 text-gray-900">Rtr. Trisha Dave</h3>
+                                    <p class="mt-4 text-gray-600">Michael manages the club's finances with integrity and transparency, ensuring every resource is used effectively for our projects.</p>
+                                    <p class="mt-3 text-gray-500 italic">"A budget is telling your money where to go."</p>
+                                </div>
+                                <div class="mt-6 flex space-x-4">
+                                    <a href="#" class="text-gray-400 hover:text-blue-700 social-icon"><i class="fab fa-linkedin-in text-2xl"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team Member Card: Priya Sharma -->
+                    <div class="team-card" style="--delay: 0.5s;">
+                        <div class="team-card-inner bg-white rounded-xl shadow-lg overflow-hidden md:flex">
+                            <img class="w-full md:w-52 h-64 md:h-auto object-cover" src="img/samprat2.png" alt="Priya Sharma">
+                            <div class="p-8 flex flex-col justify-between">
+                                <div>
+                                    <div class="uppercase tracking-wide text-sm text-purple-600 font-bold">Segeant At Arms</div>
+                                    <h3 class="text-3xl font-bold mt-1 text-gray-900">Rtr. Samprat Trivadi</h3>
+                                    <p class="mt-4 text-gray-600">Priya is the creative mind behind our impactful community projects, leading with innovation from environmental drives to educational workshops.</p>
+                                     <p class="mt-3 text-gray-500 italic">"Action is the foundational key to all success."</p>
+                                </div>
+                                <div class="mt-6 flex space-x-4">
+                                    <a href="#" class="text-gray-400 hover:text-pink-600 social-icon"><i class="fab fa-instagram text-2xl"></i></a>
+                                    <a href="#" class="text-gray-400 hover:text-blue-700 social-icon"><i class="fab fa-linkedin-in text-2xl"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Team Member Card: David Chen -->
+                    <div class="team-card" style="--delay: 0.6s;">
+                        <div class="team-card-inner bg-white rounded-xl shadow-lg overflow-hidden md:flex">
+                            <img class="w-full md:w-52 h-64 md:h-auto object-cover" src="img/manan2.png" alt="David Chen">
+                            <div class="p-8 flex flex-col justify-between">
+                                <div>
+                                    <div class="uppercase tracking-wide text-sm text-teal-600 font-bold">IPP & Club Advisor</div>
+                                    <h3 class="text-3xl font-bold mt-1 text-gray-900">Rtr. Manan Bhatt</h3>
+                                    <p class="mt-4 text-gray-600">David is the friendly face that welcomes all new members. He is passionate about building a strong, inclusive, and friendly club community.</p>
+                                    <p class="mt-3 text-gray-500 italic">"Friendship is born at that moment when one person says to another, ‘What! You too?'"</p>
+                                </div>
+                                <div class="mt-6 flex space-x-4">
+                                    <a href="#" class="text-gray-400 hover:text-blue-800 social-icon"><i class="fab fa-facebook-f text-2xl"></i></a>
+                                    <a href="#" class="text-gray-400 hover:text-blue-400 social-icon"><i class="fab fa-twitter text-2xl"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-10">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 Rotaract Club of New LJIET. All Rights Reserved.</p>
+            <p>Designed with <i class="fas fa-heart text-red-500"></i> for Community Service</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Staggered Animation for Team Cards ---
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            const teamCards = document.querySelectorAll('.team-card');
+            teamCards.forEach(card => {
+                observer.observe(card);
+            });
+
+            // --- Mobile Menu Toggle ---
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Note: The login modal logic would need to be included here as well if it's needed on this page.
+            // For simplicity, it's omitted but could be copied from the main page script.
+        });
+    </script>
+</body>
+</html>
